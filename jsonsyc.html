@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>JSON Example</title>
+</head>
+
+<body>
+  <h1>JSON Example</h1>
+  <button onclick="updateJSON()">Update JSON</button>
+
+  <script>
+    function updateJSON() {
+      // Step 1: Get the JSON data
+      let xhr = new XMLHttpRequest();
+      xhr.open('GET', 'example.json', true);
+      xhr.send();
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            let data = JSON.parse(xhr.responseText);
+
+            // Step 2: Update the JSON data
+            data.example = 'This is some updated data';
+
+            // Step 3: Send the updated JSON data back to the server
+            let xhr2 = new XMLHttpRequest();
+            console.log(data.example);
+            xhr2.open('POST', 'example.json', true);
+            xhr2.setRequestHeader('Content-Type', 'application/json');
+            xhr2.send(JSON.stringify(data));
+            console.log('jk');
+          } else {
+            console.log('Error: ' + xhr.status);
+          }
+        }
+      };
+    }
+  </script>
+</body>
+
+</html>
